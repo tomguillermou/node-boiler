@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "description": "NodeIn backend",
     "scripts": {
-        "start": "node -r module-alias/register dist/main.js",
-        "start:dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node -r tsconfig-paths/register src/main.ts'",
+        "start:dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node -r tsconfig-paths/register -r ./src/secrets.ts src/main.ts'",
+        "start:prod": "node -r module-alias/register -r ./dist/secrets.js dist/main.js",
         "build": "rm -rf dist && tsc",
         "lint": "eslint . --ext .ts",
         "test": "mocha --exit"
@@ -16,7 +16,8 @@
     "license": "ISC",
     "_moduleAliases": {
         "@config": "dist/config",
-        "@core": "dist/core"
+        "@core": "dist/core",
+        "@modules": "dist/modules"
     },
     "dependencies": {
         "bcrypt": "^5.0.1",
@@ -27,9 +28,9 @@
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.21",
         "module-alias": "^2.2.2",
-        "mongoose": "^5.12.2",
+        "mongoose": "^6.0.12",
         "morgan": "^1.10.0",
-        "validator": "^13.5.2"
+        "validator": "^13.7.0"
     },
     "devDependencies": {
         "@types/bcrypt": "^3.0.1",

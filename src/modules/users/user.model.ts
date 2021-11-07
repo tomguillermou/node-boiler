@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import { HookNextFunction, model, Schema } from 'mongoose';
 
 import { encryptionService } from '@core/services';
 
-import { UserDocument } from './user.interfaces';
+import { User, UserDocument } from './user.interfaces';
 
 const attributes = {
     email: {
@@ -23,22 +23,18 @@ const attributes = {
         required: true,
         type: String,
     },
-    position: {
-        required: true,
-        type: String,
-    },
 };
 
 const options = {};
 
-const UserSchema = new mongoose.Schema(attributes, options);
+const UserSchema = new Schema<User>(attributes, options);
 
 // Encrypt password
-UserSchema.pre<UserDocument>('save', function (next: mongoose.HookNextFunction) {
+UserSchema.pre<UserDocument>('save', function (next: HookNextFunction) {
     if (this.isModified('password')) {
         this.password = encryptionService.encrypt(this.password);
     }
     next();
 });
 
-export const UserModel = mongoose.model<UserDocument>('User', UserSchema);
+export const UserModel = model<UserDocument>('User', UserSchema);

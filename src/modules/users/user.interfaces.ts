@@ -5,7 +5,6 @@ export interface UserDTO {
     password?: string;
     firstname?: string;
     lastname?: string;
-    position?: string;
 }
 
 export interface UserCredentials {
@@ -18,7 +17,6 @@ export interface User {
     password: string;
     firstname: string;
     lastname: string;
-    position: string;
 }
 
-export interface UserDocument extends User, Document {}
+export type UserDocument = User & Document;

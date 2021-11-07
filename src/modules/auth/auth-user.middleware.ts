@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { BadRequestError, ForbiddenError } from '@core/models/api-errors.model';
-import { jwtService, responseService } from '@core/services';
+import { BadRequestError, ForbiddenError, apiService } from '@core/api';
+import { jwtService } from '@core/services';
+import { userService } from '@modules/users';
 
-import { userService } from '@core/modules/user';
-
-export async function authenticateUser(
+export async function authUserMiddleware(
     req: Request,
     res: Response,
     next: NextFunction
@@ -29,6 +28,6 @@ export async function authenticateUser(
 
         next();
     } catch (error) {
-        responseService.sendError(res, error);
+        apiService.sendError(res, error as Error);
     }
 }

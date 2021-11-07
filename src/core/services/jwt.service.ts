@@ -1,24 +1,28 @@
 import jwt from 'jsonwebtoken';
+import { isValidObjectId } from 'mongoose';
 
-import { BadRequestError } from '@core/models/api-errors.model';
-import { validationService } from '@core/services';
+import { BadRequestError } from '../api';
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
+export class JwtService {
+    private readonly JWT_SECRET = process.env.JWT_SECRET as string;
 
-export function sign(payload: string): string {
-    return jwt.sign(payload, JWT_SECRET);
-}
-
-export function verify(payload: string): string {
-    const token = jwt.verify(payload, JWT_SECRET);
-
-    if (typeof token !== 'string') {
-        throw new BadRequestError('Invalid JWT');
+    public sign(payload: string): string {
+        return jwt.sign(payload, this.JWT_SECRET);
     }
 
-    if (!validationService.isValidId(token)) {
-        throw new BadRequestError('Invalid JWT');
-    }
+    public verify(payload: string): string {
+        const token = jwt.verify(payload, this.JWT_SECRET);
 
-    return token;
+        if (typeof token !== 'string') {
+            throw new BadRequestError('Invalid JWT');
+        }
+
+        if (!isValidObjectId(token)) {
+            throw new BadRequestError('Invalid JWT');
+        }
+
+        return token;
+    }
 }
+
+export const jwtService = new JwtService();

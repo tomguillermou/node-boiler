@@ -3,19 +3,20 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import { appRoutes } from '@config/routes';
+import { plugRoutes } from '@config/routes';
 
-const app = express();
+export function createExpressApp(): express.Express {
+    const app = express();
 
-app.use(morgan('dev'));
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
+    app.use(morgan('dev'));
+    app.use(helmet());
+    app.use(cors());
+    app.use(express.json());
 
-// Enabling CORS Pre-Flight
-// app.options('*', cors()); // include before other routes
+    // Enabling CORS Pre-Flight
+    // app.options('*', cors()); // include before other routes
 
-// Plug routes
-app.use(appRoutes);
+    plugRoutes(app);
 
-export { app };
+    return app;
+}

@@ -1,4 +1,4 @@
-import { HttpCode } from '@core/enums';
+import { HttpCode } from './http-code.enum';
 
 export abstract class ApiError {
     constructor(public readonly httpCode: number, public readonly message: string) {}

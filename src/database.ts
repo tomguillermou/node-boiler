@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
 
-import { MONGOOSE_CONNECTION_OPTIONS } from './config/configuration';
+import { CONNECTION_OPTIONS } from './config/database';
 
 const { MONGO_URI, MONGO_DATABASE } = process.env;
 
 /**
  * Connect to MongoDB database.
  */
-export async function connectToMongoDB(): Promise<void> {
+export async function connectMongo(): Promise<void> {
     const connectionString = `${MONGO_URI}/${MONGO_DATABASE}`;
 
-    await mongoose.connect(connectionString, MONGOOSE_CONNECTION_OPTIONS);
+    await mongoose.connect(connectionString, CONNECTION_OPTIONS);
 
-    console.log(`[log] Connected to db: ${MONGO_DATABASE}`);
+    console.log('Connected to database');
 }

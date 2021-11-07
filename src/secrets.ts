@@ -1,34 +1,27 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 
-import { ENV_FILE, SECRETS } from '@config/configuration';
-
-const DEFAULT_ENV_FILE = '.env.example';
+import { ENV_FILE, SECRETS } from './config/secrets';
 
 /**
  * Load secrets from the environment file.
  */
-function loadSecrets(): void {
-    // Detect file to load secrets from
-    const path = fs.existsSync(ENV_FILE) ? ENV_FILE : DEFAULT_ENV_FILE;
-    console.log(`[log] Loading secrets from file: ${path}`);
-
-    // Load environment variables
-    dotenv.config({ path });
-
-    // Make sure no secret is missing, otherwise exit process
-    let missingSecret = false;
-
-    for (const secret of SECRETS) {
-        if (typeof process.env[secret] === 'undefined' || process.env[secret] === null) {
-            console.error(`[error] ${secret} is missing from file: ${path}`);
-            missingSecret = true;
-        }
-    }
-
-    if (missingSecret) {
+function load(): void {
+    if (!fs.existsSync(ENV_FILE)) {
+        console.error(`Environment file does not exists: ${ENV_FILE}`);
         process.exit(1);
     }
+
+    dotenv.config({ path: ENV_FILE });
+
+    const missingSecrets = SECRETS.filter((secret) => typeof process.env[secret] === 'undefined');
+
+    if (missingSecrets.length) {
+        missingSecrets.forEach((secret) => console.error(`Missing secret: ${secret}`));
+        process.exit(1);
+    }
+
+    console.log('Secrets loaded');
 }
 
-loadSecrets();
+load();

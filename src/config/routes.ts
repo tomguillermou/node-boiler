@@ -1,17 +1,14 @@
-import { Router } from 'express';
+import express from 'express';
 
-// Import routes here
-import { authRoutes } from '@core/modules/auth';
-import { userRoutes } from '@core/modules/user';
+// Import routes and middlewares here
+import { authRoutes, authUserMiddleware } from '@modules/auth';
+import { userRoutes } from '@modules/users';
 
-const appRoutes = Router();
+export function plugRoutes(app: express.Express): void {
+    app.use('/auth', userRoutes);
+    app.use('/users', authUserMiddleware, authRoutes);
 
-// Plug routes here
-appRoutes.use('/users', authRoutes);
-appRoutes.use('/auth', userRoutes);
-
-appRoutes.use((req, res) => {
-    return res.json({ message: 'Endpoint not found' });
-});
-
-export { appRoutes };
+    app.use((req, res) => {
+        return res.json({ message: 'Endpoint not found' });
+    });
+}
