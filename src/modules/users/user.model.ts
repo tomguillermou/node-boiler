@@ -29,6 +29,8 @@ const options = {};
 
 const UserSchema = new Schema<User>(attributes, options);
 
+UserSchema.index({ email: 1 }, { unique: true });
+
 // Encrypt password
 UserSchema.pre<UserDocument>('save', function (next: HookNextFunction) {
     if (this.isModified('password')) {
