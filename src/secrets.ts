@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
+import { logger } from '@core/logger';
+
 import { SECRETS } from '@config/secrets';
 
 const ENV_FILE_PATH = path.join(process.cwd(), '.env');
@@ -11,7 +13,7 @@ const ENV_FILE_PATH = path.join(process.cwd(), '.env');
  */
 function load(): void {
     if (!fs.existsSync(ENV_FILE_PATH)) {
-        console.error(`Environment file not found`);
+        logger.error(`Environment file not found`);
         process.exit(1);
     }
 
@@ -20,11 +22,11 @@ function load(): void {
     const missingSecrets = SECRETS.filter((secret) => typeof process.env[secret] === 'undefined');
 
     if (missingSecrets.length) {
-        missingSecrets.forEach((secret) => console.error(`Missing secret: ${secret}`));
+        missingSecrets.forEach((secret) => logger.error(`Missing secret: ${secret}`));
         process.exit(1);
     }
 
-    console.log('Secrets loaded');
+    logger.info('Secrets loaded');
 }
 
 load();

@@ -1,18 +1,19 @@
 import { Response } from 'express';
 
+import { logger } from '../logger';
+
 import { HttpCode } from './http-code.enum';
 import { ApiError } from './api-error';
 
 export class ApiService {
     public sendError(res: Response, error: Error): void {
-        if (process.env.NODE_ENV === 'development') {
-            // eslint-disable-next-line no-console
-            console.error(error);
-        }
-
         if (error instanceof ApiError) {
             res.status(error.httpCode).json({ message: error.message });
         } else {
+            if (process.env.NODE_ENV === 'development') {
+                logger.error(error);
+            }
+
             res.status(HttpCode.InternalServerError).json({ message: 'Internal server error' });
         }
     }

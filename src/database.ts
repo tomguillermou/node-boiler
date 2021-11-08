@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-import { CONNECTION_OPTIONS } from './config/database';
+import { logger } from '@core/logger';
+
+import { CONNECTION_OPTIONS } from '@config/database';
 
 const { MONGO_URI, MONGO_DATABASE } = process.env;
 
@@ -12,5 +14,5 @@ export async function connectMongo(): Promise<void> {
 
     await mongoose.connect(connectionString, CONNECTION_OPTIONS);
 
-    console.log('Connected to database');
+    logger.info('Connected to database');
 }
