@@ -1,9 +1,6 @@
-/** File to load secrets from */
-export const ENV_FILE = '.env';
-
 /** Secrets to load from the environment file */
 export const SECRETS = [
-    'ENVIRONMENT',
+    'NODE_ENV',
     'PORT',
     'MONGO_URI',
     'MONGO_DATABASE',

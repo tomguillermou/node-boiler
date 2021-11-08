@@ -4,4 +4,5 @@ import { ConnectionOptions } from 'mongoose';
 export const CONNECTION_OPTIONS: ConnectionOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
 };
