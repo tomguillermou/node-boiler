@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-import { SECRETS } from './config/secrets';
+import { SECRETS } from '@config/secrets';
 
 const ENV_FILE_PATH = path.join(process.cwd(), '.env');
 
