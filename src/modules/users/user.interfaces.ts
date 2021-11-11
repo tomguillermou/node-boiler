@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export interface UserDTO {
     email?: string;
@@ -13,6 +13,8 @@ export interface UserCredentials {
 }
 
 export interface User {
+    _id: Types.ObjectId;
+
     email: string;
     password: string;
     firstname: string;

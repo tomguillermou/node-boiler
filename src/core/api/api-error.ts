@@ -1,7 +1,9 @@
 import { HttpCode } from './http-code.enum';
 
-export abstract class ApiError {
-    constructor(public readonly httpCode: number, public readonly message: string) {}
+export abstract class ApiError extends Error {
+    constructor(public readonly httpCode: number, public readonly message: string) {
+        super(message);
+    }
 }
 
 export class BadRequestError extends ApiError {

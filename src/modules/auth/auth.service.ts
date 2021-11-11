@@ -7,7 +7,7 @@ class AuthService {
         const user = await userService.getUserByEmail(email, { withPassword: true });
 
         if (user && encryptionService.compareHash(password, user.password)) {
-            return jwtService.sign(user._id);
+            return jwtService.sign(user._id.toString());
         }
 
         throw new BadRequestError('Invalid credentials');
@@ -16,7 +16,7 @@ class AuthService {
     public async registerUser(newUser: User): Promise<string> {
         const user = await userService.createUser(newUser);
 
-        return jwtService.sign(user._id);
+        return jwtService.sign(user._id.toString());
     }
 }
 

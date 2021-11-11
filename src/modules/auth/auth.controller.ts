@@ -1,21 +1,17 @@
 import { Request, Response } from 'express';
 
-import { ApiController } from '@core/api';
+import { apiService } from '@core/api';
 
 import { authService } from './auth.service';
 
-class AuthController extends ApiController {
-    constructor() {
-        super();
-    }
-
+class AuthController {
     async login(req: Request, res: Response): Promise<void> {
         try {
             const jwt = await authService.loginUser(req.body);
 
-            this.apiService.sendJson(res, { jwt });
+            apiService.sendJson(res, { jwt });
         } catch (error) {
-            this.apiService.sendError(res, error as Error);
+            apiService.sendError(res, error as Error);
         }
     }
 
@@ -23,9 +19,9 @@ class AuthController extends ApiController {
         try {
             const jwt = await authService.registerUser(req.body);
 
-            this.apiService.sendJson(res, { jwt });
+            apiService.sendJson(res, { jwt });
         } catch (error) {
-            this.apiService.sendError(res, error as Error);
+            apiService.sendError(res, error as Error);
         }
     }
 }
