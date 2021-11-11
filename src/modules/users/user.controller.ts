@@ -1,19 +1,15 @@
 import { Request, Response } from 'express';
 
-import { ApiController, InternalServerError } from '@core/api';
+import { InternalServerError, apiService } from '@core/api';
 
 import { userService } from './user.service';
 
-class UserController extends ApiController {
-    constructor() {
-        super();
-    }
-
+class UserController {
     async readMany(req: Request, res: Response): Promise<void> {
         try {
             throw new InternalServerError('Endpoint not implemented');
         } catch (error) {
-            this.apiService.sendError(res, error as Error);
+            apiService.sendError(res, error as Error);
         }
     }
 
@@ -22,9 +18,9 @@ class UserController extends ApiController {
             const { userId } = req.params;
             const user = await userService.findUserById(userId);
 
-            this.apiService.sendJson(res, { user });
+            apiService.sendJson(res, { user });
         } catch (error) {
-            this.apiService.sendError(res, error as Error);
+            apiService.sendError(res, error as Error);
         }
     }
 
@@ -32,9 +28,9 @@ class UserController extends ApiController {
         try {
             const user = await userService.findUserById(res.locals?.authUser?._id);
 
-            this.apiService.sendJson(res, { user });
+            apiService.sendJson(res, { user });
         } catch (error) {
-            this.apiService.sendError(res, error as Error);
+            apiService.sendError(res, error as Error);
         }
     }
 }
