@@ -6,7 +6,7 @@
         "start:dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node -r tsconfig-paths/register -r ./src/secrets.ts src/main.ts'",
         "start:prod": "node -r module-alias/register -r ./dist/secrets.js dist/main.js",
         "build": "rm -rf dist && tsc",
-        "lint": "eslint . --ext .ts",
+        "lint": "eslint 'src/**' --ext .ts",
         "test": "mocha --exit"
     },
     "mocha": {
