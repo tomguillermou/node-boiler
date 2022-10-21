@@ -13,8 +13,10 @@
     "license": "ISC",
     "_moduleAliases": {
         "@auth": "dist/modules/auth",
+        "@database": "dist/modules/database",
         "@encryption": "dist/modules/encryption",
         "@jwt": "dist/modules/jwt",
+        "@logger": "dist/modules/logger",
         "@users": "dist/modules/users"
     },
     "dependencies": {

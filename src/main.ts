@@ -3,19 +3,19 @@ import dotenv from 'dotenv'
 
 dotenv.config({ path: '.env' })
 
-import { logger } from './logger'
+import { Logger } from '@logger'
+import { DatabaseService } from '@database'
 
 import { api } from './api'
-import { connectDatabase } from './database'
 import { createHttpServer } from './server'
 
 async function bootstrap(): Promise<void> {
     try {
-        await connectDatabase()
+        await DatabaseService.connect()
 
         createHttpServer(api)
     } catch (error) {
-        logger.error(error)
+        Logger.error(error)
         process.exit(1)
     }
 }

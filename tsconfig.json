@@ -12,13 +12,15 @@
         // Module resolution
         "baseUrl": "./src",
         "esModuleInterop": true,
+        "module": "CommonJS",
         "paths": {
             "@auth": ["./modules/auth"],
+            "@database": ["./modules/database"],
             "@encryption": ["./modules/encryption"],
             "@jwt": ["./modules/jwt"],
+            "@logger": ["./modules/logger"],
             "@users": ["./modules/users"]
         },
-        "module": "CommonJS",
 
         // Advanced options
         "skipLibCheck": true

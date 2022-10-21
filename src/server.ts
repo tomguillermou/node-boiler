@@ -1,11 +1,11 @@
 import http from 'http'
 
-import { logger } from './logger'
+import { Logger } from '@logger'
 
 const PORT = process.env.PORT
 
 export function createHttpServer(app: http.RequestListener): void {
     http.createServer(app).listen(PORT)
 
-    logger.info('Server now listening')
+    Logger.info('Server: listening')
 }
