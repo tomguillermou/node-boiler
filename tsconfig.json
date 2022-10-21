@@ -10,12 +10,13 @@
         "strict": true,
 
         // Module resolution
-        "baseUrl": "src",
+        "baseUrl": "./src",
         "esModuleInterop": true,
         "paths": {
-            "@core": ["core/"],
-            "@auth": ["modules/auth/"],
-            "@users": ["modules/users/"]
+            "@auth": ["./modules/auth"],
+            "@encryption": ["./modules/encryption"],
+            "@jwt": ["./modules/jwt"],
+            "@users": ["./modules/users"]
         },
         "module": "CommonJS",
 

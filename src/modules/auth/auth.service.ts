@@ -1,4 +1,5 @@
-import { EncryptionService, encryptionService, JwtService, jwtService } from '@core'
+import { EncryptionService, encryptionService } from '@encryption'
+import { JwtService, jwtService } from '@jwt'
 import { User, UserCredentials, UserRepository, userRepository } from '@users'
 
 import { InvalidCredentialsError } from './errors'
@@ -11,7 +12,7 @@ export class AuthService {
     ) {}
 
     public async loginUser({ email, password }: UserCredentials): Promise<string> {
-        const user = await this.userRepository.getUserByEmail(email, { withPassword: true })
+        const user = await this.userRepository.getByEmail(email, { withPassword: true })
 
         const areValidCredentials =
             user && this.encryptionService.compareHash(password, user.password)
@@ -30,7 +31,7 @@ export class AuthService {
     }
 
     private signTokenForUser(user: User): string {
-        return this.jwtService.sign(user._id.toString())
+        return this.jwtService.signToken(user._id)
     }
 }
 

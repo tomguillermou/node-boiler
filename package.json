@@ -3,22 +3,19 @@
     "version": "1.0.0",
     "description": "NodeIn backend",
     "scripts": {
-        "start:dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node -r tsconfig-paths/register -r ./src/secrets.ts src/main.ts'",
+        "start:dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.test.ts' --exec 'ts-node -r tsconfig-paths/register src/main.ts'",
         "start:prod": "node dist/main.js",
         "build": "rm -rf dist && tsc",
         "lint": "eslint 'src/**' --ext .ts",
         "test": "mocha --exit"
     },
-    "mocha": {
-        "spec": "dist/**/*.spec.js"
-    },
     "author": "",
     "license": "ISC",
     "_moduleAliases": {
-        "@config": "dist/config/",
-        "@core": "dist/core/",
-        "@auth": "dist/modules/auth/",
-        "@users": "dist/modules/users/"
+        "@auth": "dist/modules/auth",
+        "@encryption": "dist/modules/encryption",
+        "@jwt": "dist/modules/jwt",
+        "@users": "dist/modules/users"
     },
     "dependencies": {
         "bcrypt": "^5.0.1",

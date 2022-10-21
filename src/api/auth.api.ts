@@ -1,10 +1,10 @@
-import { Request, Response, Router } from 'express'
+import { Request, Response } from 'express'
 
 import { authService, InvalidCredentialsError } from '@auth'
 
-import { apiService, ForbiddenError } from './core'
+import { ApiFactory, apiService, ForbiddenError } from './core'
 
-const authApi = Router()
+const authApi = ApiFactory.createRouter({ auth: 'none' })
 
 authApi.post('/login', async (req: Request, res: Response): Promise<Response> => {
     try {
