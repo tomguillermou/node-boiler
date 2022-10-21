@@ -1,18 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-import { logger } from '@core';
+import { logger } from '@core'
 
-import { CONNECTION_OPTIONS } from '@config/database';
+const { MONGO_URI, MONGO_DATABASE } = process.env
 
-const { MONGO_URI, MONGO_DATABASE } = process.env;
+export async function connectDatabase(): Promise<void> {
+    const connectionString = `${MONGO_URI}/${MONGO_DATABASE}`
 
-/**
- * Connect to MongoDB database.
- */
-export async function connectMongo(): Promise<void> {
-    const connectionString = `${MONGO_URI}/${MONGO_DATABASE}`;
+    await mongoose.connect(connectionString, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    })
 
-    await mongoose.connect(connectionString, CONNECTION_OPTIONS);
-
-    logger.info('Connected to database');
+    logger.info('Connected to database')
 }

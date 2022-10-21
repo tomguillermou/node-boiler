@@ -1,22 +1,24 @@
-import 'module-alias/register';
-import './secrets';
+import 'module-alias/register'
+import dotenv from 'dotenv'
 
-import { logger } from '@core';
+dotenv.config({ path: '.env' })
 
-import { createExpressApp } from './app';
-import { connectMongo } from './database';
-import { createHttpServer } from './server';
+import { logger } from '@core'
+
+import { createExpressApp } from './app'
+import { connectDatabase } from './database'
+import { createHttpServer } from './server'
 
 async function main(): Promise<void> {
     try {
-        await connectMongo();
+        await connectDatabase()
 
-        const app = createExpressApp();
-        createHttpServer(app);
+        const app = createExpressApp()
+        createHttpServer(app)
     } catch (error) {
-        logger.error(error);
-        process.exit(1);
+        logger.error(error)
+        process.exit(1)
     }
 }
 
-main();
+main()

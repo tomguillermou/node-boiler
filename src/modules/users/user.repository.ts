@@ -23,10 +23,6 @@ export class UserRepository {
 
         return doc.toObject()
     }
-
-    public findUserById(id: string): Promise<User | null> {
-        return this.model.findById(id).lean().exec()
-    }
 }
 
 export const userRepository = new UserRepository(userModel, encryptionService)
