@@ -1,6 +1,6 @@
 import http from 'http';
 
-import { logger } from '@core/logger';
+import { logger } from '@core';
 
 const PORT = process.env.PORT;
 

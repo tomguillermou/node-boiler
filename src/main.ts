@@ -1,4 +1,7 @@
-import { logger } from '@core/logger';
+import 'module-alias/register';
+import './secrets';
+
+import { logger } from '@core';
 
 import { createExpressApp } from './app';
 import { connectMongo } from './database';

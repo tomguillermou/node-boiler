@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-import { logger } from '@core/logger';
+import { logger } from '@core';
 
 import { SECRETS } from '@config/secrets';
 

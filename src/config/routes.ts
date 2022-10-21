@@ -1,8 +1,8 @@
 import express from 'express';
 
 // Import routes and middlewares here
-import { authRoutes, authUserMiddleware } from '@modules/auth';
-import { userRoutes } from '@modules/users';
+import { authRoutes, authUserMiddleware } from '@auth';
+import { userRoutes } from '@users';
 
 export function plugRoutes(app: express.Express): void {
     app.use('/auth', authRoutes);

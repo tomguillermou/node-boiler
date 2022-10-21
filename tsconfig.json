@@ -14,8 +14,9 @@
         "esModuleInterop": true,
         "paths": {
             "@config/*": ["config/*"],
-            "@core/*": ["core/*"],
-            "@modules/*": ["modules/*"]
+            "@core": ["core/"],
+            "@auth": ["modules/auth/"],
+            "@users": ["modules/users/"]
         },
         "module": "CommonJS",
 

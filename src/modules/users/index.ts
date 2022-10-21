@@ -1,3 +1,2 @@
-export * from './user.interfaces';
-export * from './user.service';
-export * from './user.routes';
+export { User } from './user.interface'
+export { UserRepository, userRepository } from './user.repository'

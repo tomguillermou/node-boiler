@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { logger } from '@core/logger';
+import { logger } from '@core';
 
 import { CONNECTION_OPTIONS } from '@config/database';
 

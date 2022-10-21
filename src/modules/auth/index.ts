@@ -1,2 +1,2 @@
-export * from './auth.routes';
-export * from './auth-user.middleware';
+export { InvalidCredentialsError } from './errors'
+export { AuthService, authService } from './auth.service'

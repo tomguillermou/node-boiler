@@ -4,7 +4,7 @@
     "description": "NodeIn backend",
     "scripts": {
         "start:dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec 'ts-node -r tsconfig-paths/register -r ./src/secrets.ts src/main.ts'",
-        "start:prod": "node -r module-alias/register -r ./dist/secrets.js dist/main.js",
+        "start:prod": "node dist/main.js",
         "build": "rm -rf dist && tsc",
         "lint": "eslint 'src/**' --ext .ts",
         "test": "mocha --exit"
@@ -15,9 +15,10 @@
     "author": "",
     "license": "ISC",
     "_moduleAliases": {
-        "@config": "dist/config",
-        "@core": "dist/core",
-        "@modules": "dist/modules"
+        "@config": "dist/config/",
+        "@core": "dist/core/",
+        "@auth": "dist/modules/auth/",
+        "@users": "dist/modules/users/"
     },
     "dependencies": {
         "bcrypt": "^5.0.1",

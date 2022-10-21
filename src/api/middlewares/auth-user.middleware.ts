@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { BadRequestError, ForbiddenError, apiService } from '@core/api';
-import { jwtService } from '@core/services';
-import { userService } from '@modules/users';
+import { BadRequestError, ForbiddenError, apiService, jwtService } from '@core';
+import { userService } from '@users';
 
 export async function authUserMiddleware(
     req: Request,
