@@ -2,7 +2,8 @@ import { NextFunction, Request, Response } from 'express'
 
 import { jwtService, InvalidTokenError } from '@jwt'
 
-import { apiService, BadRequestError, ForbiddenError } from '..'
+import { BadRequestError, ForbiddenError } from '../errors'
+import { apiService } from '../services'
 
 export async function authJwt(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
