@@ -1,6 +1,6 @@
 import { encryptionService, EncryptionService } from 'core'
 
-import { User } from './user.interface'
+import { User } from './interfaces'
 import { UserModel, userModel } from './user.model'
 
 export class UserRepository {

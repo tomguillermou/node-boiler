@@ -1,6 +1,6 @@
 import { Model, model, Schema } from 'mongoose'
 
-import { User } from './user.interface'
+import { User } from './interfaces'
 
 const userSchema = new Schema<User>({
     email: {

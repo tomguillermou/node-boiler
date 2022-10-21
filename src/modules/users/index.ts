@@ -1,2 +1,2 @@
-export { User } from './user.interface'
+export { User, UserCredentials } from './interfaces'
 export { UserRepository, userRepository } from './user.repository'
