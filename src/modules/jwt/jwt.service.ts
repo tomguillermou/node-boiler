@@ -4,9 +4,20 @@ import { isValidObjectId } from 'mongoose'
 import { UserId, User, UserRepository, userRepository } from '@users'
 
 import { InvalidTokenError } from './errors'
+import { ConfigService } from '@config'
 
 export class JwtService {
-    constructor(private readonly secret: string, private userRepository: UserRepository) {}
+    private readonly secret: string
+
+    constructor(private userRepository: UserRepository) {
+        const secret = ConfigService.get('JWT_SECRET')
+
+        if (!secret) {
+            throw new Error('Secret must be provided')
+        }
+
+        this.secret = secret
+    }
 
     public signToken(userId: UserId): string {
         return jwt.sign(userId.toString(), this.secret)
@@ -29,4 +40,4 @@ export class JwtService {
     }
 }
 
-export const jwtService = new JwtService(process.env.JWT_SECRET as string, userRepository)
+export const jwtService = new JwtService(userRepository)

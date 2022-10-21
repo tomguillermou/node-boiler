@@ -14,6 +14,7 @@
     "license": "ISC",
     "_moduleAliases": {
         "@auth": "dist/modules/auth",
+        "@config": "dist/modules/config",
         "@database": "dist/modules/database",
         "@encryption": "dist/modules/encryption",
         "@jwt": "dist/modules/jwt",

@@ -1,7 +1,4 @@
 import 'module-alias/register'
-import dotenv from 'dotenv'
-
-dotenv.config({ path: '.env' })
 
 import { Logger } from '@logger'
 import { DatabaseService } from '@database'

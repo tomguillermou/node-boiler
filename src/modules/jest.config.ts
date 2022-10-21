@@ -14,7 +14,6 @@ const config: Config = {
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
         prefix: '<rootDir>/../../src/',
     }),
-    setupFiles: ['dotenv/config'],
     testEnvironment: 'node',
     testMatch: ['**/*.test.ts'],
     transform: {

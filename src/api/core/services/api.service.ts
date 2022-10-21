@@ -1,5 +1,6 @@
 import { Response } from 'express'
 
+import { ConfigService } from '@config'
 import { Logger } from '@logger'
 
 import { HttpCode } from '../enums'
@@ -8,7 +9,7 @@ import { ApiError } from '../errors'
 export class ApiService {
     public getResponseWithError(res: Response, error: Error): Response {
         if (!(error instanceof ApiError)) {
-            if (process.env.NODE_ENV === 'development') {
+            if (ConfigService.get('NODE_ENV') === 'development') {
                 Logger.error(error)
             }
 

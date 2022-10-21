@@ -1,11 +1,16 @@
 import http from 'http'
 
 import { Logger } from '@logger'
-
-const PORT = process.env.PORT
+import { ConfigService } from '@config'
 
 export function createHttpServer(app: http.RequestListener): void {
-    http.createServer(app).listen(PORT)
+    const port = ConfigService.get('PORT')
+
+    if (!port) {
+        throw new Error('Port must be provided to start the server.')
+    }
+
+    http.createServer(app).listen(port)
 
     Logger.info('Server: listening')
 }

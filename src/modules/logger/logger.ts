@@ -1,5 +1,7 @@
 import winston from 'winston'
 
+import { ConfigService } from '@config'
+
 export const Logger = winston.createLogger({
     level: 'info',
     levels: winston.config.npm.levels,
@@ -14,7 +16,7 @@ export const Logger = winston.createLogger({
 // If we're not in production then log to the `console` with the format:
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
-if (process.env.NODE_ENV !== 'production') {
+if (ConfigService.get('NODE_ENV') === 'development') {
     Logger.add(
         new winston.transports.Console({
             format: winston.format.simple(),

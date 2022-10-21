@@ -12,6 +12,7 @@
         "moduleResolution": "node",
         "paths": {
             "@auth": ["./modules/auth"],
+            "@config": ["./modules/config"],
             "@database": ["./modules/database"],
             "@encryption": ["./modules/encryption"],
             "@jwt": ["./modules/jwt"],
