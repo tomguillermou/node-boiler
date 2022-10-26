@@ -1,32 +1,35 @@
-import { Response } from 'express'
+import express, { Express, Router } from 'express'
+import helmet from 'helmet'
+import cors from 'cors'
+import morgan from 'morgan'
 
 import { ConfigService } from '@config'
-import { Logger } from '@logger'
 
-import { HttpCode } from '../enums'
-import { ApiError } from '../errors'
+import { authJwt } from '../middlewares'
 
-export class ApiService {
-    public getResponseWithError(res: Response, error: Error): Response {
-        if (!(error instanceof ApiError)) {
-            if (ConfigService.get('NODE_ENV') === 'development') {
-                Logger.error(error)
-            }
+export abstract class ApiService {
+    public static createRouter(options: { auth: 'jwt' | 'none' }): Router {
+        const router = Router()
 
-            return res
-                .status(HttpCode.InternalServerError)
-                .json({ message: 'Internal server error' })
+        if (options.auth === 'jwt') {
+            router.use(authJwt)
         }
 
-        return res.status(error.httpCode).json({ message: error.message })
+        return router
     }
 
-    public getResponseWithData(res: Response, data: unknown): Response {
-        return res.status(HttpCode.Success).json({
-            success: true,
-            data,
-        })
+    public static createApp(): Express {
+        const app = express()
+
+        // Disable request logging for test environment
+        if (ConfigService.get('NODE_ENV') !== 'test') {
+            app.use(morgan('dev'))
+        }
+
+        app.use(helmet())
+        app.use(cors())
+        app.use(express.json())
+
+        return app
     }
 }
-
-export const apiService = new ApiService()

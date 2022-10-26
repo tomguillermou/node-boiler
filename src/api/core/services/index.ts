@@ -1,2 +1,2 @@
-export * from './api.factory'
 export * from './api.service'
+export * from './response.service'

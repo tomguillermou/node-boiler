@@ -1,9 +1,9 @@
-import { ApiFactory } from './core'
+import { ApiService } from './core'
 
-import { authApi } from './auth.api'
+import { authRouter } from './auth.api'
 
-const api = ApiFactory.createApi()
+const api = ApiService.createApp()
 
-api.use('/auth', authApi)
+api.use('/auth', authRouter)
 
 export { api }

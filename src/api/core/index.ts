@@ -1,2 +1,2 @@
 export { BadRequestError, ForbiddenError, InternalServerError, NotFoundError } from './errors'
-export { ApiService, apiService, ApiFactory } from './services'
+export { ApiService, ResponseService } from './services'

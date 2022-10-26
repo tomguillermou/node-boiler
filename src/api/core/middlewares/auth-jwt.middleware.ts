@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express'
 import { jwtService, InvalidTokenError } from '@jwt'
 
 import { BadRequestError, ForbiddenError } from '../errors'
-import { apiService } from '../services'
+import { ResponseService } from '../services'
 
 export async function authJwt(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
@@ -23,6 +23,6 @@ export async function authJwt(req: Request, res: Response, next: NextFunction): 
 
         next()
     } catch (error) {
-        apiService.getResponseWithError(res, error as Error)
+        ResponseService.sendError(res, error as Error)
     }
 }

@@ -14,10 +14,12 @@
             "@auth": ["./modules/auth"],
             "@config": ["./modules/config"],
             "@database": ["./modules/database"],
+            "@database/testing": ["./modules/database/testing"],
             "@encryption": ["./modules/encryption"],
             "@jwt": ["./modules/jwt"],
             "@logger": ["./modules/logger"],
-            "@users": ["./modules/users"]
+            "@users": ["./modules/users"],
+            "@users/testing": ["./modules/users/testing"]
         },
         "types": ["node"],
         "skipLibCheck": true
