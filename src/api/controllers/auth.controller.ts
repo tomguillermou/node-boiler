@@ -24,6 +24,9 @@ export class AuthController {
       if (error instanceof InvalidCredentialsError) {
         return response.status(HttpStatus.Forbidden).send({ error: 'Invalid credentials' })
       }
+
+      console.log(error)
+
       return response
         .status(HttpStatus.InternalServerError)
         .send({ error: 'Internal server error' })

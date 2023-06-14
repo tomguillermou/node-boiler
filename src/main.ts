@@ -10,7 +10,7 @@ async function bootstrap(): Promise<void> {
     await connectToDatabase()
     createHttpServer(createApp())
   } catch (error) {
-    console.log('🚀 ~ boostrap:', error)
+    console.log(error)
     process.exit(1)
   }
 }

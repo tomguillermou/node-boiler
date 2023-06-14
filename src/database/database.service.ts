@@ -30,7 +30,9 @@ export async function clearCollections(): Promise<void> {
     const { collections } = connection
 
     for (const key in collections) {
-      await collections[key].deleteMany({})
+      if (Object.prototype.hasOwnProperty.call(collections, key)) {
+        await collections[key].deleteMany({})
+      }
     }
   }
 }
