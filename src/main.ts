@@ -1,20 +1,20 @@
 import 'module-alias/register'
+import 'reflect-metadata'
 
-import { Logger } from '@logger'
-import { DatabaseService } from '@database'
+// import { api } from '@api'
+// import { connectToDatabase } from '@database'
+// import { logger } from '@logger'
 
-import { api } from './api'
-import { createHttpServer } from './server'
+// import { createHttpServer } from './server'
 
 async function bootstrap(): Promise<void> {
-    try {
-        await DatabaseService.connect()
-
-        createHttpServer(api)
-    } catch (error) {
-        Logger.error(error)
-        process.exit(1)
-    }
+  try {
+    // await connectToDatabase()
+    // createHttpServer(api)
+  } catch (error) {
+    // logger.error(error)
+    process.exit(1)
+  }
 }
 
 bootstrap()
