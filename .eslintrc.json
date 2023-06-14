@@ -10,14 +10,14 @@
     "no-promise-executor-return": "error",
     "no-self-compare": "error",
     "no-template-curly-in-string": "error",
-    "no-unused-private-class-members": "error",
+    // "no-unused-private-class-members": "error",
     "no-use-before-define": "error",
 
     // Suggestions (https://eslint.org/docs/latest/rules/#suggestions)
     "block-scoped-var": "error",
     "camelcase": "error",
-    "capitalized-comments": "error",
-    "class-methods-use-this": "error",
+    // "capitalized-comments": "error",
+    // "class-methods-use-this": "error",
     "consistent-return": "error",
     "curly": "error",
     "default-case": "error",
