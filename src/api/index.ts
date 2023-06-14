@@ -1,9 +1,23 @@
-import { ApiService } from './core'
+import config from 'config'
+import { Express } from 'express'
+import morgan from 'morgan'
+import { createExpressServer, useContainer } from 'routing-controllers'
+import Container from 'typedi'
 
-import { authRouter } from './auth.api'
+import { CONTROLLERS } from './controllers'
 
-const api = ApiService.createApp()
+export function createApp(): Express {
+  useContainer(Container)
 
-api.use('/auth', authRouter)
+  const app = createExpressServer({
+    defaultErrorHandler: false,
+    controllers: CONTROLLERS,
+  })
 
-export { api }
+  // Disable request logging for test environment
+  if (config.get('environment') !== 'test') {
+    app.use(morgan('dev'))
+  }
+
+  return app
+}

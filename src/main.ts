@@ -1,18 +1,16 @@
-import 'module-alias/register'
 import 'reflect-metadata'
 
-// import { api } from '@api'
-// import { connectToDatabase } from '@database'
-// import { logger } from '@logger'
+import { createApp } from '@api'
+import { connectToDatabase } from '@database'
 
-// import { createHttpServer } from './server'
+import { createHttpServer } from './server'
 
 async function bootstrap(): Promise<void> {
   try {
-    // await connectToDatabase()
-    // createHttpServer(api)
+    await connectToDatabase()
+    createHttpServer(createApp())
   } catch (error) {
-    // logger.error(error)
+    console.log('🚀 ~ boostrap:', error)
     process.exit(1)
   }
 }

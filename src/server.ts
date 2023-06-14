@@ -1,16 +1,11 @@
-import { createServer, RequestListener } from 'http'
+import { RequestListener, createServer } from 'http'
 
-import { Logger } from '@logger'
-import { ConfigService } from '@config'
+import config from 'config'
 
 export function createHttpServer(app: RequestListener): void {
-    const port = ConfigService.get('PORT')
+  const port = config.get<number>('server.port')
 
-    if (!port) {
-        throw new Error('Port must be provided to start the server.')
-    }
+  createServer(app).listen(port)
 
-    createServer(app).listen(port)
-
-    Logger.info('Server: listening')
+  console.log(`Server: listening on port ${port}`)
 }

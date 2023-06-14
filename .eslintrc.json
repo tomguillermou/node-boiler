@@ -63,7 +63,7 @@
     "no-undef-init": "error",
     "no-undefined": "error",
     "no-unneeded-ternary": "error",
-    "no-useless-constructor": "error",
+    // "no-useless-constructor": "error",
     "no-useless-return": "error",
     "no-var": "error",
     "no-void": "error",
