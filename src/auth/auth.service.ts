@@ -26,7 +26,7 @@ export class AuthService {
   constructor(private readonly userRepository: UserRepository) {}
 
   public async loginUser(credentials: CredentialsDto): Promise<{ accessToken: string }> {
-    const [user] = await this.userRepository.getByEmail(credentials.email)
+    const user = await this.userRepository.getByEmail(credentials.email)
 
     if (user && compare(credentials.password, user.password)) {
       return { accessToken: this.signToken(user) }
@@ -45,7 +45,7 @@ export class AuthService {
     const userId = jwt.verify(accessToken, jwtSecret)
 
     if (typeof userId === 'string') {
-      const [user] = await this.userRepository.getById(userId)
+      const user = await this.userRepository.getById(userId)
 
       if (user) {
         return user
