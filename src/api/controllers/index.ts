@@ -1,3 +1,4 @@
 import { AuthController } from './auth.controller'
+import { UserController } from './user.controller'
 
-export const CONTROLLERS = [AuthController]
+export const CONTROLLERS = [AuthController, UserController]
