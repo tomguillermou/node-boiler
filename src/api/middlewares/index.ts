@@ -1,1 +1,1 @@
-export * from './auth-jwt.middleware'
+export * from './authorize.middleware'

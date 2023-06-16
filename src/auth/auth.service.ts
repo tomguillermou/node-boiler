@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { Service } from 'typedi'
 
 import { compare } from '@encryption'
-import { User, UserNotFoundError, UserRepository } from '@users'
+import { User, UserRepository } from '@users'
 
 import { CredentialsDto } from './credentials.dto'
 
@@ -25,46 +25,37 @@ export class InvalidTokenError extends Error {
 export class AuthService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  //   public async authUserFromJwt(jwtPayload: string): Promise<User> {
-  //     const token = jwt.verify(jwtPayload, jwtSecret)
-
-  //     if (typeof token !== 'string') {
-  //       throw new InvalidTokenError()
-  //     }
-
-  //     const user = await this.userRepository.getUserById(token)
-
-  //     if (!user) {
-  //       throw new InvalidTokenError()
-  //     }
-
-  //     return user
-  //   }
-
   public async loginUser(credentials: CredentialsDto): Promise<{ accessToken: string }> {
-    try {
-      const user = await this.userRepository.getUserByEmail(credentials.email)
+    const [user] = await this.userRepository.getByEmail(credentials.email)
 
-      if (compare(credentials.password, user.password)) {
-        return { accessToken: this.signTokenForUser(user) }
-      }
-
-      throw new InvalidCredentialsError()
-    } catch (error) {
-      if (error instanceof UserNotFoundError) {
-        throw new InvalidCredentialsError()
-      }
-      throw error
+    if (user && compare(credentials.password, user.password)) {
+      return { accessToken: this.signToken(user) }
     }
+
+    throw new InvalidCredentialsError()
   }
 
   public async registerUser(user: User): Promise<{ accessToken: string }> {
     const registeredUser = await this.userRepository.createUser(user)
 
-    return { accessToken: this.signTokenForUser(registeredUser) }
+    return { accessToken: this.signToken(registeredUser) }
   }
 
-  private signTokenForUser(user: User): string {
+  public async loginToken(accessToken: string): Promise<User> {
+    const userId = jwt.verify(accessToken, jwtSecret)
+
+    if (typeof userId === 'string') {
+      const [user] = await this.userRepository.getById(userId)
+
+      if (user) {
+        return user
+      }
+    }
+
+    throw new InvalidTokenError()
+  }
+
+  private signToken(user: User): string {
     return jwt.sign(String(user._id), jwtSecret)
   }
 }

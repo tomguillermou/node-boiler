@@ -5,6 +5,7 @@ import { createExpressServer, useContainer } from 'routing-controllers'
 import Container from 'typedi'
 
 import { CONTROLLERS } from './controllers'
+import { authorize } from './middlewares'
 
 export function createApp(): Express {
   useContainer(Container)
@@ -12,6 +13,7 @@ export function createApp(): Express {
   const app = createExpressServer({
     defaultErrorHandler: false,
     controllers: CONTROLLERS,
+    authorizationChecker: authorize,
   })
 
   // Disable request logging for test environment

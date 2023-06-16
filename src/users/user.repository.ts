@@ -23,16 +23,11 @@ export class UserRepository {
     return doc.toJSON()
   }
 
-  public async getUserByEmail(email: string): Promise<User> {
-    const user = await userModel.findOne({ email }).lean().exec()
-
-    if (user) {
-      return user
-    }
-    throw new UserNotFoundError()
+  public getByEmail(email: string): Promise<User[]> {
+    return userModel.find({ email }).lean().exec()
   }
 
-  //   public getUserById(id: string): Promise<User | null> {
-  //     return userModel.findById(id).lean().exec()
-  //   }
+  public getById(id: string): Promise<User[]> {
+    return userModel.find({ _id: id }).lean().exec()
+  }
 }
