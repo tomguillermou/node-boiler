@@ -4,6 +4,7 @@ import { HashService, JwtService } from '@encryption'
 import { User, UserRepository } from '@users'
 
 import { LoginTokenDto, LoginUserDto, RegisterUserDto } from './dto'
+import { InvalidCredentialsError } from './errors'
 
 @Service()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
     if (user && this.hashService.compare(password, user.password)) {
       return { accessToken: this.jwtService.sign(String(user._id)) }
     }
-    return null
+    throw new InvalidCredentialsError()
   }
 
   public async registerUser(params: RegisterUserDto): Promise<{ accessToken: string }> {

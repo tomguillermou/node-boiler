@@ -1,10 +1,10 @@
-import { Body, JsonController, Post, Res } from 'routing-controllers'
 import { Response } from 'express'
+import { Body, JsonController, Post, Res } from 'routing-controllers'
+import { Service } from 'typedi'
 
-import { AuthService, CredentialsDto, InvalidCredentialsError } from '@auth'
+import { AuthService, LoginUserDto, InvalidCredentialsError } from '@auth'
 
 import { HttpStatus } from '../http-status.enum'
-import { Service } from 'typedi'
 
 @JsonController('/auth')
 @Service()
@@ -13,7 +13,7 @@ export class AuthController {
 
   @Post('/login')
   public async login(
-    @Body() credentials: CredentialsDto,
+    @Body() credentials: LoginUserDto,
     @Res() response: Response
   ): Promise<Response> {
     try {
@@ -22,7 +22,7 @@ export class AuthController {
       return response.status(HttpStatus.OK).send(data)
     } catch (error) {
       if (error instanceof InvalidCredentialsError) {
-        return response.status(HttpStatus.Forbidden).send({ error: 'Invalid credentials' })
+        return response.status(HttpStatus.Forbidden).send({ error: error.message })
       }
 
       console.log(error)
