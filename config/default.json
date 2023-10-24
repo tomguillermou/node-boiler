@@ -9,6 +9,8 @@
   "logger": {
     "level": "info"
   },
-  "jwtSecret": "secret",
-  "saltRounds": 5
+  "encryption": {
+    "jwtSecret": "secret",
+    "saltRounds": 5
+  }
 }

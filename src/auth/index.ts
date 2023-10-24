@@ -1,2 +1,2 @@
-export * from './auth.service'
-export { CredentialsDto } from './credentials.dto'
+export { LoginUserDto, RegisterUserDto } from './dto'
+export { AuthService } from './auth.service'

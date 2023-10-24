@@ -1,26 +1,29 @@
+import { plainToClass } from 'class-transformer'
 import { Service } from 'typedi'
 
-import { EncryptionService } from '@encryption'
+import { HashService } from '@encryption'
 
-import { User } from './user.interface'
+import { User } from './user'
 import { userModel } from './user.model'
 
-type CreateUser = Omit<User, '_id'> & Partial<Pick<User, '_id'>>
+import { CreateUserDto } from './dto'
 
 @Service()
 export class UserRepository {
-  constructor(private readonly encryptionService: EncryptionService) {}
+  constructor(private readonly hashService: HashService) {}
 
-  public async createUser(user: CreateUser): Promise<User> {
-    const password = this.encryptionService.encrypt(user.password)
+  public async createUser(user: CreateUserDto): Promise<User> {
+    const password = this.hashService.hash(user.password)
 
     const doc = await userModel.create({ ...user, password })
 
-    return doc.toJSON()
+    return plainToClass(User, doc.toJSON())
   }
 
-  public getByEmail(email: string): Promise<User | null> {
-    return userModel.findOne({ email }).lean().exec()
+  public async getByEmail(email: string): Promise<User | null> {
+    const user = await userModel.findOne({ email }).lean().exec()
+
+    return plainToClass(User, user)
   }
 
   public getById(id: string): Promise<User | null> {

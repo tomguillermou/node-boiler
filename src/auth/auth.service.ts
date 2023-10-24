@@ -1,61 +1,42 @@
-import config from 'config'
-import jwt from 'jsonwebtoken'
 import { Service } from 'typedi'
 
-import { compare } from '@encryption'
+import { HashService, JwtService } from '@encryption'
 import { User, UserRepository } from '@users'
 
-import { CredentialsDto } from './credentials.dto'
-
-const jwtSecret = config.get<string>('jwtSecret')
-
-export class InvalidCredentialsError extends Error {
-  constructor() {
-    super('Invalid credentials')
-  }
-}
-
-export class InvalidTokenError extends Error {
-  constructor() {
-    super('Invalid token')
-  }
-}
+import { LoginTokenDto, LoginUserDto, RegisterUserDto } from './dto'
 
 @Service()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly hashService: HashService,
+    private readonly jwtService: JwtService,
+    private readonly userRepository: UserRepository
+  ) {}
 
-  public async loginUser(credentials: CredentialsDto): Promise<{ accessToken: string }> {
-    const user = await this.userRepository.getByEmail(credentials.email)
+  public async loginUser(params: LoginUserDto): Promise<{ accessToken: string } | null> {
+    const { email, password } = params
 
-    if (user && compare(credentials.password, user.password)) {
-      return { accessToken: this.signToken(user) }
+    const user = await this.userRepository.getByEmail(email)
+
+    if (user && this.hashService.compare(password, user.password)) {
+      return { accessToken: this.jwtService.sign(String(user._id)) }
     }
-
-    throw new InvalidCredentialsError()
+    return null
   }
 
-  public async registerUser(user: User): Promise<{ accessToken: string }> {
-    const registeredUser = await this.userRepository.createUser(user)
+  public async registerUser(params: RegisterUserDto): Promise<{ accessToken: string }> {
+    const user = await this.userRepository.createUser(params)
 
-    return { accessToken: this.signToken(registeredUser) }
+    return { accessToken: this.jwtService.sign(String(user._id)) }
   }
 
-  public async loginToken(accessToken: string): Promise<User> {
-    const userId = jwt.verify(accessToken, jwtSecret)
+  public loginToken(params: LoginTokenDto): Promise<User | null> {
+    const { accessToken } = params
+    const userId = this.jwtService.verify(accessToken)
 
     if (typeof userId === 'string') {
-      const user = await this.userRepository.getById(userId)
-
-      if (user) {
-        return user
-      }
+      return this.userRepository.getById(userId)
     }
-
-    throw new InvalidTokenError()
-  }
-
-  private signToken(user: User): string {
-    return jwt.sign(String(user._id), jwtSecret)
+    return Promise.resolve(null)
   }
 }

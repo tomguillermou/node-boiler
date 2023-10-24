@@ -19,10 +19,10 @@ export async function disconnectFromDatabase(): Promise<void> {
   console.log('Database: disconnected')
 }
 
-export function generateId(value?: string): Types.ObjectId {
+export function generateId(value?: string): string {
   return typeof value === 'string' && isValidObjectId(value)
-    ? new Types.ObjectId(value)
-    : new Types.ObjectId()
+    ? String(new Types.ObjectId(value))
+    : String(new Types.ObjectId())
 }
 
 export async function clearCollections(): Promise<void> {
