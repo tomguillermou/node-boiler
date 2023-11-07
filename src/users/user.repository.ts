@@ -1,19 +1,16 @@
 import { plainToClass } from 'class-transformer'
 import { Service } from 'typedi'
 
-import { HashService } from '@encryption'
+import { Hash } from '@utils'
 
+import { CreateUserDto } from './dto'
 import { User } from './user'
 import { userModel } from './user.model'
 
-import { CreateUserDto } from './dto'
-
 @Service()
 export class UserRepository {
-  constructor(private readonly hashService: HashService) {}
-
   public async createUser(user: CreateUserDto): Promise<User> {
-    const password = this.hashService.hash(user.password)
+    const password = Hash.hash(user.password)
 
     const doc = await userModel.create({ ...user, password })
 

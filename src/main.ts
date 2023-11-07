@@ -1,13 +1,13 @@
 import 'reflect-metadata'
 
 import { createApp } from '@api'
-import { connectToDatabase } from '@database'
+import { Database } from '@utils'
 
 import { createHttpServer } from './server'
 
 async function bootstrap(): Promise<void> {
   try {
-    await connectToDatabase()
+    await Database.connectToDatabase()
     createHttpServer(createApp())
   } catch (error) {
     console.log(error)

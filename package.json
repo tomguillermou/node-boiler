@@ -15,8 +15,8 @@
     "@api": "dist/api/index.js",
     "@auth": "dist/auth/index.js",
     "@database": "dist/database/index.js",
-    "@encryption": "dist/encryption/index.js",
-    "@users": "dist/users/index.js"
+    "@users": "dist/users/index.js",
+    "@utils": "dist/utils/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

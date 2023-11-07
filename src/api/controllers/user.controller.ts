@@ -1,9 +1,10 @@
 import { Get, JsonController, Param, Res } from 'routing-controllers'
 import { Response } from 'express'
+import { Service } from 'typedi'
+
+import { UserRepository } from '@users'
 
 import { HttpStatus } from '../http-status.enum'
-import { Service } from 'typedi'
-import { UserRepository } from '@users'
 
 @JsonController('/users')
 @Service()
